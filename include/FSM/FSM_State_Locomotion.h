@@ -31,6 +31,8 @@ class FSM_State_Locomotion : public FSM_State<T> {
   // Behavior to be carried out when exiting a state
   void onExit();
 
+  WBC_Ctrl<T>* getWbcCtrl() const { return _wbc_ctrl; }
+
  private:
   // Keep track of the control iterations
   int iter = 0;
