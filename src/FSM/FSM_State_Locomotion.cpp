@@ -51,7 +51,7 @@ FSM_State_Locomotion<T>::FSM_State_Locomotion(ControlFSMData<T>* _controlFSMData
   this->footstepLocations = Mat34<T>::Zero();
   _wbc_ctrl = new LocomotionCtrl<T>(_controlFSMData->_quadruped->buildModel());
   _wbc_data = new LocomotionCtrlData<T>();
-  _wbc_ctrl->setFloatingBaseWeight(10000.);
+  _wbc_ctrl->setFloatingBaseWeight(1.);
 }
 
 template <typename T>
@@ -324,12 +324,12 @@ void FSM_State_Locomotion<T>::LocomotionControlStep() {
     _wbc_ctrl->run(_wbc_data, *this->_data);
   }
 
-  for(int leg(0); leg<4; ++leg){
-    //this->_data->_legController->commands[leg].pDes = pDes_backup[leg];
-    this->_data->_legController->commands[leg].vDes = vDes_backup[leg];
-    //this->_data->_legController->commands[leg].kpCartesian = Kp_backup[leg];
-    this->_data->_legController->commands[leg].kdCartesian = Kd_backup[leg];
-  }
+  // for(int leg(0); leg<4; ++leg){
+  //   //this->_data->_legController->commands[leg].pDes = pDes_backup[leg];
+  //   this->_data->_legController->commands[leg].vDes = vDes_backup[leg];
+  //   //this->_data->_legController->commands[leg].kpCartesian = Kp_backup[leg];
+  //   this->_data->_legController->commands[leg].kdCartesian = Kd_backup[leg];
+  // }
 
 }
 
