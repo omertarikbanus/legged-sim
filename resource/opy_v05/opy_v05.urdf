@@ -89,7 +89,7 @@ RotorMass: in kg
   <link name="opy_v05/base_link_inertia">
     <inertial>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
-      <mass value="14.2"/>
+      <mass value="5.2"/>
       <!-- The base is symmetrical. -->
       <inertia ixx="0.127732" ixy="-0.00297058" ixz="0.00147725" iyy="0.251312" iyz="0.00112127" izz="0.288919"/>
     </inertial>

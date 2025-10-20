@@ -28,7 +28,7 @@
 
 ,
 
-      <inertial pos="0 0 0" quat="0.00167939 0.710147 0.0188142 0.7038" mass="14.2" diaginertia="0.288964 0.251352 0.127647"/>
+      <inertial pos="0 0 0" quat="0.00167939 0.710147 0.0188142 0.7038" mass="5.2" diaginertia="0.288964 0.251352 0.127647"/>
       <geom type="mesh" mesh="GOVDE"/>
 
     <body name="opy_v05/abad_1" pos="0.223895 -0.0655252 0">
@@ -217,10 +217,10 @@
   </actuator>
 
   <contact>
-  <pair geom1="floor" geom2="ROBOT_FOOT_1" condim="3" friction="1 1 0.005 0.0001 0.0001"  solimp =  "0.9 0.95 0.001 0.1 6" />
-  <pair geom1="floor" geom2="ROBOT_FOOT_2" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
-  <pair geom1="floor" geom2="ROBOT_FOOT_3" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
-  <pair geom1="floor" geom2="ROBOT_FOOT_4" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="floor" geom2="ROBOT_FOOT_1" condim="3" friction="2.0 12.0 0.1 0.01 0.01"  solimp =  "0.9 0.95 0.001 0.1 6" />
+  <pair geom1="floor" geom2="ROBOT_FOOT_2" condim="3" friction="2.0 12.0 0.1 0.01 0.01" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="floor" geom2="ROBOT_FOOT_3" condim="3" friction="2.0 12.0 0.1 0.01 0.01" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="floor" geom2="ROBOT_FOOT_4" condim="3" friction="2.0 12.0 0.1 0.01 0.01" solimp =  "0.9 0.95 0.001 0.1 6"/>
   <!-- <pair geom1="box" geom2="ROBOT_FOOT_1" condim="3" friction="1 1 0.005 0.0001 0.0001"  solimp =  "0.9 0.95 0.001 0.1 6" />
   <pair geom1="box" geom2="ROBOT_FOOT_2" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
   <pair geom1="box" geom2="ROBOT_FOOT_3" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
