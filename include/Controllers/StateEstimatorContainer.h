@@ -185,7 +185,7 @@ class StateEstimatorContainer {
     }
   }
 
- private:
+//  private:
   StateEstimatorData<T> _data;
   std::vector<GenericEstimator<T>*> _estimators;
   Vec4<T> _phase;

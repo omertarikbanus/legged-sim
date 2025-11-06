@@ -12,9 +12,10 @@ BodyPosTask<T>::BodyPosTask(const FloatingBaseModel<T>* robot)
   TK::Jt_.block(0, 3, 3, 3).setIdentity();
   TK::JtDotQdot_ = DVec<T>::Zero(TK::dim_task_);
 
-  _Kp_kin = DVec<T>::Constant(TK::dim_task_, 1.);
+  _Kp_kin = DVec<T>::Constant(TK::dim_task_, 0.1);
   _Kp = DVec<T>::Constant(TK::dim_task_, 50.);
   _Kd = DVec<T>::Constant(TK::dim_task_, 1.0);
+  _Kp_kin[2] = 1.0;
 }
 
 template <typename T>

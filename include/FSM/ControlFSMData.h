@@ -27,6 +27,7 @@ class LocomotionCtrlData{
     Vec3<T> vFoot_des[4];
     Vec3<T> aFoot_des[4];
     Vec3<T> Fr_des[4];
+    Vec3<T> Fr_se[4];
 
     Vec4<T> contact_state = Vec4<T>::Ones();
 };

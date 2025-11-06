@@ -3,6 +3,8 @@
  *
  *  This file uses tinyxml library to parse the URDF and set the related attributes to a Quadruped object. Only works with the given Xacro-URDF template. 
  * 
+ * #TODO move this to Utilities?
+ * 
  */
 
 #ifndef PARSEURDFTOQUADRUPED_H
@@ -38,7 +40,7 @@ Quadruped<T> ParseURDFtoQuadruped(std::string fname, RobotType robotType)
     tinyxml2::XMLElement *robot = doc.FirstChildElement("robot");
     if (!robot)
     {
-        std::cout << "[URDF Parser] Unable to find robot element. Make sure your urdf is properly formed";
+        std::cout << "[URDF Parser] Unable to find robot element. Make sure your urdf is properly formed"<<std::endl;
     }
 
     double rotorRadius, rotorHeight, rotorMass;
@@ -48,13 +50,13 @@ Quadruped<T> ParseURDFtoQuadruped(std::string fname, RobotType robotType)
     quadruped._robotName = std::string(robot_name);
     if (!robot_name)
     {
-        std::cout << "[URDF Parser] Unable to find robot name element. Make sure your urdf is properly formed";
+         std::cout << "[URDF Parser] Unable to find robot name element. Make sure your urdf is properly formed";
     }
 
     tinyxml2::XMLElement *custom_attributes = robot->FirstChildElement("custom");
     if (!custom_attributes)
     {
-        std::cout << "[URDF Parser] Could not find the 'custom_attributes' element in the xml file.";
+         std::cout << "[URDF Parser] Could not find the 'custom_attributes' element in the xml file.";
     }
     else
     {
@@ -153,7 +155,7 @@ Quadruped<T> ParseURDFtoQuadruped(std::string fname, RobotType robotType)
 
     if ((!abad_2_joint) || (!hip_2_joint) || (!knee_2_joint) || (!foot_2_joint))
     {
-        std::cout << "[URDF Parser] Cannot find one of the main joints. Make sure your URDF is formed right and you follow the needed name convention.";
+         std::cout << "[URDF Parser] Cannot find one of the main joints. Make sure your URDF is formed right and you follow the needed name convention.";
     }
 
     // set quadruped prooerties from urdf link properties
@@ -206,19 +208,22 @@ Quadruped<T> ParseURDFtoQuadruped(std::string fname, RobotType robotType)
     }
     ~i;
 
+    quadruped._footRadius=stof(std::string(footLink->FirstChildElement("collision")->FirstChildElement("geometry")->FirstChildElement("sphere")->Attribute("radius")));
+
     // Joint lengths for the jacobian
     quadruped._abadLinkLength = stof(hip_2_joint_origin[1]);
     quadruped._abadXOffset = stof(hip_2_joint_origin[0]);
     quadruped._hipLinkLength = -1 * stof(knee_2_joint_origin[2]);
-    quadruped._kneeLinkLength = -1 * stof(foot_2_joint_origin[2])+0.0;
+    quadruped._kneeLinkLength = -1 * stof(foot_2_joint_origin[2]) ;//+ quadruped._footRadius*cos(35*M_PI/180);
+    // quadruped._kneeLinkLength = std::sqrt( std::pow(stof(foot_2_joint_origin[2]),2) + std::pow( quadruped._footRadius,2)+ 2*(stof(foot_2_joint_origin[2]))*quadruped._footRadius*cos(145*M_PI/180));
     // TODO @tarik this is defined to be?
 
-    quadruped._kneeLinkY_offset = -1 * stof(knee_2_joint_origin[1]); // TODO
+    quadruped._kneeLinkY_offset = 1 * stof(knee_2_joint_origin[1]); // TODO
 
     float upper_limit = stof(hip_2_joint->FirstChildElement("limit")->Attribute("upper"));
     if (!upper_limit)
     {
-        std::cout << "[URDF Parser] Cannot find upper limit for the leg. Defaulting to Pi";
+         std::cout << "[URDF Parser] Cannot find upper limit for the leg. Defaulting to Pi";
         upper_limit = M_PI;
     }
     quadruped._maxLegLength = cos(upper_limit) * (quadruped._hipLinkLength + cos(upper_limit) * quadruped._kneeLinkLength);
@@ -356,10 +361,10 @@ Quadruped<T> ParseURDFtoQuadruped(std::string fname, RobotType robotType)
     quadruped._bodyInertia = bodyInertia;
 
     // locations
-    quadruped._abadLocation = Vec3<T>(stof(abad_2_joint_origin[0]), stof(abad_2_joint_origin[1]), 0);
-    quadruped._hipLocation = Vec3<T>(stof(hip_2_joint_origin[0]) , quadruped._abadLinkLength, 0);
+    quadruped._abadLocation = Vec3<T>(stof(abad_2_joint_origin[0]), stof(abad_2_joint_origin[1]), stof(abad_2_joint_origin[2]));
+    quadruped._hipLocation = Vec3<T>(stof(hip_2_joint_origin[0]) , stof(hip_2_joint_origin[1]), stof(hip_2_joint_origin[2]));
     // TODO @tarik this is defined to be?
-    quadruped._kneeLocation = Vec3<T>(0, -quadruped._kneeLinkY_offset, -quadruped._hipLinkLength);
+    quadruped._kneeLocation = Vec3<T>(-stof(knee_2_joint_origin[0]),stof(knee_2_joint_origin[1]),stof(knee_2_joint_origin[2]));
 
     quadruped._abadRotorLocation = Vec3<T>(quadruped._bodyLength, quadruped._bodyWidth, 0) * 0.5;
     quadruped._hipRotorLocation = Vec3<T>(quadruped._abadXOffset, quadruped._abadLinkLength, 0);

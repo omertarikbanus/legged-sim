@@ -51,7 +51,7 @@ FSM_State_Locomotion<T>::FSM_State_Locomotion(ControlFSMData<T>* _controlFSMData
   this->footstepLocations = Mat34<T>::Zero();
   _wbc_ctrl = new LocomotionCtrl<T>(_controlFSMData->_quadruped->buildModel());
   _wbc_data = new LocomotionCtrlData<T>();
-  _wbc_ctrl->setFloatingBaseWeight(1.);
+  _wbc_ctrl->setFloatingBaseWeight(10.);
 }
 
 template <typename T>
@@ -296,8 +296,8 @@ void FSM_State_Locomotion<T>::LocomotionControlStep() {
     for (size_t i(0); i < 4; ++i)
     {
       _wbc_data->pFoot_des[i] = this->_data->locomotionCtrlData.pFoot_des[i];
-      _wbc_data->vFoot_des[i] = Eigen::Matrix<T, 3, 1>::Zero();
-      _wbc_data->aFoot_des[i] = Eigen::Matrix<T, 3, 1>::Zero();
+      _wbc_data->vFoot_des[i] = this->_data->locomotionCtrlData.vFoot_des[i];
+      _wbc_data->aFoot_des[i] =   this->_data->locomotionCtrlData.aFoot_des[i];
       _wbc_data->Fr_des[i] = this->_data->locomotionCtrlData.Fr_des[i] * this->_data->locomotionCtrlData.contact_state[i];
     }
     

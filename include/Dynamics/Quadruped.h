@@ -63,9 +63,10 @@ class Quadruped {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   RobotType _robotType;
+  std::string _robotName;
   T _bodyLength, _bodyWidth, _bodyHeight, _bodyMass;
   T _abadGearRatio, _hipGearRatio, _kneeGearRatio;
-  T _abadLinkLength, _hipLinkLength, _kneeLinkLength, _kneeLinkY_offset, _maxLegLength, _abadXOffset;
+  T _abadLinkLength, _hipLinkLength, _kneeLinkLength, _kneeLinkY_offset, _maxLegLength, _abadXOffset, _footRadius;
   T _motorKT, _motorR, _batteryV;
   T _motorTauMax;
   T _jointDamping, _jointDryFriction;
@@ -73,9 +74,8 @@ class Quadruped {
       _hipRotorInertia, _kneeRotorInertia, _bodyInertia;
   Vec3<T> _abadLocation, _abadRotorLocation, _hipLocation, _hipRotorLocation,
       _kneeLocation, _kneeRotorLocation;
-        std::string _robotName;
-
   FloatingBaseModel<T> buildModel();
+  // FloatingBaseModel<T> _model;
   bool buildModel(FloatingBaseModel<T>& model);
   // std::vector<ActuatorModel<T>> buildActuatorModels();
 
@@ -91,7 +91,7 @@ class Quadruped {
   }
 
   /*!
-   * Get location of the hip for the given leg in robot frame
+   * Get location of the hip (nay ABAD) for the given leg in robot frame
    * @param leg : the leg index
    */
   Vec3<T> getHipLocation(int leg) {

@@ -1,0 +1,264 @@
+<mujoco model="demir_0">
+  <compiler angle="radian" meshdir="meshes/" autolimits="true"/>
+  <default class="main"/>
+
+  <asset>
+    <hfield name="hmap" file="my_output_image_low.png" size="2 1 0.3 0.07"/>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="32" height="192"/>
+    <texture type="cube" name="body" builtin="flat" mark="cross" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" markrgb="1 1 1" width="127" height="762"/>
+    <texture type="2d" name="grid" builtin="checker" rgb1="0.1 0.2 0.3" rgb2="0.2 0.3 0.4" width="512" height="512"/>
+    <material name="body" texture="body" texuniform="true" rgba="0.8 0.6 0.4 1"/>
+    <material name="grid" texture="grid" texuniform="true" reflectance="0.2"/>
+    <mesh name="ROBOT_GOVDE" file="ROBOT_GOVDE.stl"/>
+    <mesh name="ROBOT_ABDUCTION_FR" file="ROBOT_ABDUCTION_FR.stl"/>
+    <mesh name="ROBOT_HIP_R" file="ROBOT_HIP_R.stl"/>
+    <mesh name="ROBOT_KNEE" file="ROBOT_KNEE.stl"/>
+    <mesh name="ROBOT_FOOT" file="ROBOT_FOOT.stl"/>
+    <mesh name="ROBOT_ABDUCTION_FL" file="ROBOT_ABDUCTION_FL.stl"/>
+    <mesh name="ROBOT_HIP_L" file="ROBOT_HIP_L.stl"/>
+    <mesh name="ROBOT_ABDUCTION_HR" file="ROBOT_ABDUCTION_HR.stl"/>
+    <mesh name="ROBOT_ABDUCTION_HL" file="ROBOT_ABDUCTION_HL.stl"/>
+    <mesh name="boxx" file="box.stl" scale = "0.1 0.1 0.1"/>
+
+  </asset>
+  <option  mpr_tolerance="1e-8" mpr_iterations = "100">
+    <flag multiccd="enable"/>
+    
+  </option>
+  <worldbody>
+    <!-- <geom name="floor" size="0 0 1" type="hfield" material="grid"  hfield='hmap' /> -->
+    <geom name="floor" size="0 0 1" type="plane" material="grid" />
+   
+    <light name="spotlight" target="demir_0/body" pos="0 -6 6" dir="0 0 -1" cutoff="30" diffuse="0.8 0.8 0.8" mode="targetbodycom"/>
+
+
+
+    <body name="demir_0/body" pos="0 0 0.07" gravcomp="0">
+
+      <inertial pos="0 0 0" quat="0.0 0.0 0.0 1.0" mass="18.3" diaginertia="0.144005 0.380679 0.447682 "/>
+      <freejoint name="body_joint"/>
+      <site name="sensorsurf" pos="0 0 0" size=".05 .05 .05" rgba="0.5 0.5 0.5 1" euler="0 0 0"/>
+      <!-- <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" mesh="ROBOT_GOVDE"/> -->
+      <geom type="mesh" mesh="ROBOT_GOVDE" rgba = "1 1 1 0.1"/>
+
+      <body name="demir_0/abad_1" pos="0.2225 -0.0655 0">
+        <inertial pos="0.011366 -0.007729 0.0048783" quat="0.477848 0.878431 -0.00419736 -0.00150503" mass="0.8602" diaginertia="0.00122046 0.0009384 0.000590737"/>
+        <joint name="demir_0/abad_1_joint" pos="0 0 0" axis="1 0 0" range="-1 1" damping="0.03" frictionloss="0.05"/>
+        <geom type="mesh" mesh="ROBOT_ABDUCTION_FR"/>
+        <body name="demir_0/hip_1" pos="0.07675 -0.0155 0" quat="4.63268e-05 0 0 1">
+          <inertial pos="0.00309 0.05402 -0.02642" quat="0.923165 0.07297 -0.0721491 0.370454" mass="1.3625" diaginertia="0.00619182 0.00580303 0.00131784"/>
+          <joint name="demir_0/hip_1_joint" pos="0 0 0" axis="0 1 0" range="-3.1415 3.1415" damping="0.03" frictionloss="0.05"/>
+          <geom type="mesh" mesh="ROBOT_HIP_R"/>
+          <body name="demir_0/knee_1" pos="0 0.08024 -0.2">
+            <inertial pos="0.00707764 0.0008997 -0.138041" quat="0.704433 0.00324483 -0.00123362 0.709762" mass="0.3001" diaginertia="0.00157513 0.00155615 5.61531e-05"/>
+            <joint name="demir_0/knee_1_joint" pos="0 0 0" axis="0 1 0" range="-3.1415 3.1415" damping="0.03" frictionloss="0.05"/>
+            <geom type="mesh" name="ROBOT_KNEE_1" mesh="ROBOT_KNEE"/>
+            <geom pos="0 0 -0.199696" name = "ROBOT_FOOT_1" type="sphere" size = "0.02"/>
+          </body>
+        </body>
+      </body>
+      <body name="demir_0/abad_2" pos="0.2225 0.0655 0">
+        <inertial pos="0.011366 0.007729 0.0048783" quat="0.477854 0.878418 0.00611633 -0.000394709" mass="0.8602" diaginertia="0.00122047 0.000938375 0.000590748"/>
+        <joint name="demir_0/abad_2_joint" pos="0 0 0" axis="1 0 0" range="-1 1" damping="0.03" frictionloss="0.05"/>
+        <geom type="mesh" mesh="ROBOT_ABDUCTION_FL"/>
+        <body name="demir_0/hip_2" pos="0.07675 0.0155 0" quat="4.63268e-05 0 0 1">
+          <inertial pos="0.00309 -0.05402 -0.02642" quat="0.923165 -0.07297 -0.072149 -0.370454" mass="1.3625" diaginertia="0.00619181 0.00580302 0.00131784"/>
+          <joint name="demir_0/hip_2_joint" pos="0 0 0" axis="0 1 0" range="-3.1415 3.1415" damping="0.03" frictionloss="0.05"/>
+          <geom type="mesh" mesh="ROBOT_HIP_L"/>
+          <body name="demir_0/knee_2" pos="0 -0.08024 -0.2">
+            <inertial pos="0.00707764 -0.0008997 -0.138041" quat="0.709762 -0.00123362 0.00324483 0.704433" mass="0.3001" diaginertia="0.00157513 0.00155615 5.61531e-05"/>
+            <joint name="demir_0/knee_2_joint" pos="0 0 0" axis="0 1 0" range="-3.1415 3.1415" damping="0.03" frictionloss="0.05"/>
+            <geom type="mesh" name="ROBOT_KNEE_2" mesh="ROBOT_KNEE"/>
+            <geom pos="0 0 -0.199696" name = "ROBOT_FOOT_2" type="sphere" size = "0.02"/>
+          </body>
+        </body>
+      </body>
+      <body name="demir_0/abad_3" pos="-0.2225 -0.0655 0">
+        <inertial pos="-0.011366 -0.007729 0.0048783" quat="0.477854 0.878418 0.00611633 -0.000394709" mass="0.8602" diaginertia="0.00122047 0.000938375 0.000590748"/>
+        <joint name="demir_0/abad_3_joint" pos="0 0 0" axis="1 0 0" range="-1 1" damping="0.03" frictionloss="0.05"/>
+        <geom type="mesh" mesh="ROBOT_ABDUCTION_HR"/>
+        <body name="demir_0/hip_3" pos="-0.07675 -0.0155 0" quat="4.63268e-05 0 0 1">
+          <inertial pos="0.00309 0.05402 -0.02642" quat="0.923165 0.07297 -0.0721491 0.370454" mass="1.3625" diaginertia="0.00619182 0.00580303 0.00131784"/>
+          <joint name="demir_0/hip_3_joint" pos="0 0 0" axis="0 1 0" range="-3.1415 3.1415" damping="0.03" frictionloss="0.05"/>
+          <geom type="mesh" mesh="ROBOT_HIP_R"/>
+          <body name="demir_0/knee_3" pos="0 0.08024 -0.2">
+            <inertial pos="0.00707764 0.0008997 -0.138041" quat="0.704433 0.00324483 -0.00123362 0.709762" mass="0.3001" diaginertia="0.00157513 0.00155615 5.61531e-05"/>
+            <joint name="demir_0/knee_3_joint" pos="0 0 0" axis="0 1 0" range="-3.1415 3.1415" damping="0.03" frictionloss="0.05"/>
+            <geom type="mesh" mesh="ROBOT_KNEE"/>
+            <geom pos="0 0 -0.199696" name = "ROBOT_FOOT_3" type="sphere" size = "0.02"/>
+          </body>
+        </body>
+      </body>
+      <body name="demir_0/abad_4" pos="-0.2225 0.0655 0">
+        <inertial pos="-0.011366 0.007729 0.0048783" quat="0.477854 0.878418 -0.00611633 0.000394709" mass="0.8602" diaginertia="0.00122047 0.000938375 0.000590748"/>
+        <joint name="demir_0/abad_4_joint" pos="0 0 0" axis="1 0 0" range="-1 1" damping="0.03" frictionloss="0.05"/>
+        <geom type="mesh" mesh="ROBOT_ABDUCTION_HL"/>
+        <body name="demir_0/hip_4" pos="-0.07675 0.0155 0" quat="4.63268e-05 0 0 1">
+          <inertial pos="0.00309 -0.05402 -0.02642" quat="0.923165 -0.07297 -0.072149 -0.370454" mass="1.3625" diaginertia="0.00619181 0.00580302 0.00131784"/>
+          <joint name="demir_0/hip_4_joint" pos="0 0 0" axis="0 1 0" range="-3.1415 3.1415" damping="0.03" frictionloss="0.05"/>
+          <geom type="mesh" mesh="ROBOT_HIP_L"/>
+          <body name="demir_0/knee_4" pos="0 -0.08024 -0.2">
+            <inertial pos="0.00707764 0.0008997 -0.138041" quat="0.709739 -0.00123611 0.00324744 0.704456" mass="0.3001" diaginertia="0.00157513 0.00155615 5.6153e-05"/>
+            <joint name="demir_0/knee_4_joint" pos="0 0 0" axis="0 1 0" range="-3.1415 3.1415" damping="0.03" frictionloss="0.05"/>
+            <geom type="mesh" mesh="ROBOT_KNEE"/>
+            <geom pos="0 0 -0.199696" name = "ROBOT_FOOT_4" type="sphere" size = "0.02"/>
+          </body>
+        </body>
+      </body>
+    </body>
+
+ 
+    <body pos="1. 0 -.015" euler = "0 0 0">
+      <inertial pos="0.5 .5 0" mass= "18"/>
+      <geom type="mesh" mesh = "boxx" name ="box"  rgba = ".9 0 0 1" />
+    </body>
+    <body pos="1.2 0 0.05" euler = "0 0 0">
+      <inertial pos="0.5 .5 0" mass= "18"/>
+      <geom type="mesh" mesh = "boxx" name ="box2"  rgba = ".9 0 0 1" />
+    </body>
+        <body pos="1.4 0 0.1" euler = "0 0 0">
+      <inertial pos="0.5 .5 0" mass= "18"/>
+      <geom type="mesh" mesh = "boxx" name ="box3"  rgba = ".9 0 0 1" />
+    </body>
+        <body pos="1.6 0 0.15" euler = "0. 0 0">
+      <inertial pos="0.5 .5 0" mass= "18"/>
+      <geom type="mesh" mesh = "boxx" name ="box4"  rgba = ".9 0 0 1" />
+    </body>
+        <body pos="1.8 0 0.2" euler = "0 0 0">
+      <inertial pos="0.5 .5 0" mass= "18"/>
+      <geom type="mesh" mesh = "boxx" name ="box5"  rgba = ".9 0 0 1" />
+    </body>
+        <body pos="2 0 0.25" euler = "-0. 0 0">
+      <inertial pos="0.5 .5 0" mass= "18"/>
+      <geom type="mesh" mesh = "boxx" name ="box6"  rgba = ".9 0 0 1" />
+    </body>
+        <body pos="2.2 0 0.3" euler = "0. 0 0">
+      <inertial pos="0.5 .5 0" mass= "18"/>
+      <geom type="mesh" mesh = "boxx" name ="box7"  rgba = ".9 0 0 1" />
+    </body>
+
+    <body name= "sphere1" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere1" contype="0" conaffinity="0" size = "0.01" rgba = ".1 1 1 1" />
+      <joint type="free" />
+    </body>
+    <body name= "sphere2" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere2" contype="0" conaffinity="0" size = "0.01" rgba = ".1 1 1 1" />
+      <joint type="free" />
+    </body>
+    <body name= "sphere3" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere3" contype="0" conaffinity="0" size = "0.01" rgba = ".1 1 1 1" />
+      <joint type="free" />
+    </body>
+    <body name= "sphere4" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere4" contype="0" conaffinity="0" size = "0.01" rgba = ".1 1 1 1" />
+      <joint type="free" />
+    </body> 
+
+    <body name= "bodysphere" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere5" contype="0" conaffinity="0" size = "0.2" rgba = "1 0 0 1" />
+      <joint type="free" />
+
+    </body> 
+    <body name= "sphere11" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere11" contype="0" conaffinity="0" size = "0.01" rgba = "0 1 0 1" />
+      <joint type="free" />
+    </body>
+    <body name= "sphere22" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere22" contype="0" conaffinity="0" size = "0.01" rgba ="0 1 0 1" />
+      <joint type="free" />
+    </body>
+    <body name= "sphere33" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere33" contype="0" conaffinity="0" size = "0.01" rgba = "0 1 0 1" />
+      <joint type="free" />
+    </body>
+    <body name= "sphere44" pos="0 0 20" euler = "0 0 0" >
+      <geom type="sphere"  name ="debugSphere44" contype="0" conaffinity="0" size = "0.01" rgba = "0 1 0 1" />
+      <joint type="free" />
+    </body> 
+  </worldbody>
+  <actuator>
+    <motor name="demir_0/abad_1_torque" joint="demir_0/abad_1_joint" forcelimited="true" forcerange="-25 25"/>
+    <position name="demir_0/abad_1_pos" joint="demir_0/abad_1_joint" kp="0" />
+    <velocity name="demir_0/abad_1_vel" joint="demir_0/abad_1_joint" kv="0" />
+    <motor name="demir_0/hip_1_joint" joint="demir_0/hip_1_joint"  forcelimited="true" forcerange="-25 25"  />
+    <position name="demir_0/hip_1_pos" joint="demir_0/hip_1_joint" kp="0" />
+    <velocity name="demir_0/hip_1_vel" joint="demir_0/hip_1_joint" kv="0" />
+
+
+    <motor name="demir_0/knee_1_joint" joint="demir_0/knee_1_joint"  forcelimited="true" forcerange="-25 25" />
+    <position name="demir_0/knee_1_pos" joint="demir_0/knee_1_joint" kp="0" />
+    <velocity name="demir_0/knee_1_vel" joint="demir_0/knee_1_joint" kv="0" />
+
+
+
+    <motor name="demir_0/abad_2_torque" joint="demir_0/abad_2_joint" forcelimited="true" forcerange="-25 25"/>
+    <position name="demir_0/abad_2_pos" joint="demir_0/abad_2_joint" kp="0" />
+    <velocity name="demir_0/abad_2_vel" joint="demir_0/abad_2_joint" kv="0" />
+    <motor name="demir_0/hip_2_joint" joint="demir_0/hip_2_joint"  forcelimited="true" forcerange="-25 25"  />
+    <position name="demir_0/hip_2_pos" joint="demir_0/hip_2_joint" kp="0" />
+    <velocity name="demir_0/hip_2_vel" joint="demir_0/hip_2_joint" kv="0" />
+
+
+    <motor name="demir_0/knee_2_joint" joint="demir_0/knee_2_joint"  forcelimited="true" forcerange="-25 25" />
+    <position name="demir_0/knee_2_pos" joint="demir_0/knee_2_joint" kp="0" />
+    <velocity name="demir_0/knee_2_vel" joint="demir_0/knee_2_joint" kv="0" />
+
+
+    <motor name="demir_0/abad_3_torque" joint="demir_0/abad_3_joint" forcelimited="true" forcerange="-25 25"/>
+    <position name="demir_0/abad_3_pos" joint="demir_0/abad_3_joint" kp="0" />
+    <velocity name="demir_0/abad_3_vel" joint="demir_0/abad_3_joint" kv="0" />
+
+    <motor name="demir_0/hip_3_joint" joint="demir_0/hip_3_joint"  forcelimited="true" forcerange="-25 25"  />
+    <position name="demir_0/hip_3_pos" joint="demir_0/hip_3_joint" kp="0" />
+    <velocity name="demir_0/hip_3_vel" joint="demir_0/hip_3_joint" kv="0" />
+
+
+    <motor name="demir_0/knee_3_joint" joint="demir_0/knee_3_joint"  forcelimited="true" forcerange="-25 25" />
+    <position name="demir_0/knee_3_pos" joint="demir_0/knee_3_joint" kp="0" />
+    <velocity name="demir_0/knee_3_vel" joint="demir_0/knee_3_joint" kv="0" />
+
+
+
+    <motor name="demir_0/abad_4_torque" joint="demir_0/abad_4_joint" forcelimited="true" forcerange="-25 25"/>
+    <position name="demir_0/abad_4_pos" joint="demir_0/abad_4_joint" kp="0" />
+    <velocity name="demir_0/abad_4_vel" joint="demir_0/abad_4_joint" kv="0" />
+
+    <motor name="demir_0/hip_4_joint" joint="demir_0/hip_4_joint"  forcelimited="true" forcerange="-25 25"  />
+    <position name="demir_0/hip_4_pos" joint="demir_0/hip_4_joint" kp="0" />
+    <velocity name="demir_0/hip_4_vel" joint="demir_0/hip_4_joint" kv="0" />
+
+
+    <motor name="demir_0/knee_4_joint" joint="demir_0/knee_4_joint"  forcelimited="true" forcerange="-25 25" />
+    <position name="demir_0/knee_4_pos" joint="demir_0/knee_4_joint" kp="0" />
+    <velocity name="demir_0/knee_4_vel" joint="demir_0/knee_4_joint" kv="0" />
+
+
+  </actuator>
+
+  <contact>
+  <pair geom1="floor" geom2="ROBOT_FOOT_1" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6" />
+  <pair geom1="floor" geom2="ROBOT_FOOT_2" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="floor" geom2="ROBOT_FOOT_3" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="floor" geom2="ROBOT_FOOT_4" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/> 
+  <!-- <pair geom1="box" geom2="ROBOT_FOOT_1" condim="3" friction="1 1 0.005 0.0001 0.0001"  solimp =  "0.9 0.95 0.001 0.1 6" />
+  <pair geom1="box" geom2="ROBOT_FOOT_2" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="box" geom2="ROBOT_FOOT_3" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="box" geom2="ROBOT_FOOT_4" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>   -->
+  <!-- <pair geom1="obs" geom2="demir_0/foot_1" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/> 
+  <pair geom1="obs" geom2="demir_0/foot_2" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="obs" geom2="demir_0/foot_3" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/>
+  <pair geom1="obs" geom2="demir_0/foot_4" condim="3" friction="1 1 0.005 0.0001 0.0001" solimp =  "0.9 0.95 0.001 0.1 6"/> -->
+  <exclude body1="demir_0/hip_1" body2="demir_0/body" />
+  <exclude body1="demir_0/hip_2" body2="demir_0/body" />
+
+  </contact>
+  <sensor>
+  <accelerometer name="acc" site="sensorsurf" />
+  <gyro site="sensorsurf" />
+  <framequat name="quat" objtype="body" objname="demir_0/body" />
+  </sensor>
+
+
+  </mujoco>
+
+

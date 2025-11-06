@@ -58,7 +58,7 @@ void RobotRunner::init() {
   //   _quadruped = buildCheetah3<float>();
   // }
   #ifndef MANUAL
-    _quadruped=ParseURDFtoQuadruped<float>(std::string("/app/legged-sim/resource/opy_v05/opy_v05.urdf"),RobotType::MINI_CHEETAH);
+    _quadruped=ParseURDFtoQuadruped<float>(std::string("/app/legged-sim/resource/demir_1/demir_1.urdf"),RobotType::MINI_CHEETAH);
   #else 
     _quadruped=ParseURDFtoQuadruped<float>(std::string("../resource/opy_v05/opy_v05.urdf"),RobotType::MINI_CHEETAH);
   #endif
@@ -273,11 +273,11 @@ void RobotRunner::initializeParameters()
     bool _load_parameters_from_file =1 ;
     // std::cout<<controlParameters<<std::endl;
     #ifndef MANUAL
-  	std::string robotParametersPath = "/app/legged-sim/resource/opy_v05/mc-mit-ctrl-user-parameters.yaml";
-    std::string userParametersPath = "/app/legged-sim/resource/opy_v05/mini-cheetah-defaults.yaml";
+  	std::string robotParametersPath = "/app/legged-sim/resource/demir_1/demir-user-parameters.yaml";
+    std::string userParametersPath = "/app/legged-sim/resource/demir_1/demir-robot-parameters.yaml";
     #else
-  	std::string robotParametersPath = "../resource/opy_v05/mc-mit-ctrl-user-parameters.yaml";
-    std::string userParametersPath = "../resource/opy_v05/mini-cheetah-defaults.yaml";
+  	std::string robotParametersPath = "../redsource/opy_v05/mc-mit-ctrl-user-parameters.yaml";
+    std::string userParametersPath = "../resdource/opy_v05/mini-cheetah-defaults.yaml";
     #endif
   	// userParameters.initializeFromYamlFile(path);
   	// printf("controlParameters: %d", controlParameters);

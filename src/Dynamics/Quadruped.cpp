@@ -7,7 +7,7 @@
  * which can be used to create a floating-base dynamics model of the quadruped.
  */
 
-#include <Dynamics/Quadruped.h>
+#include "Dynamics/Quadruped.h"
 #include "Dynamics/spatial.h"
 #include "Math/orientation_tools.h"
 
@@ -81,7 +81,7 @@ bool Quadruped<T>::buildModel(FloatingBaseModel<T>& model) {
 
     // Knee Joint
     bodyID++;
-    Mat6<T> xtreeKnee = createSXform(I3, _kneeLocation);
+    Mat6<T> xtreeKnee = createSXform(I3, withLegSigns<T>(_kneeLocation, legID));
     Mat6<T> xtreeKneeRotor = createSXform(I3, _kneeRotorLocation);
     if (sideSign < 0) {
       model.addBody(_kneeInertia.flipAlongAxis(CoordinateAxis::Y),
@@ -102,6 +102,7 @@ bool Quadruped<T>::buildModel(FloatingBaseModel<T>& model) {
     //model.addGroundContactPoint(bodyID, Vec3<T>(0, 0, -_kneeLinkLength), true);
 
     sideSign *= -1;
+    
   }
 
   Vec3<T> g(0, 0, -9.81);
