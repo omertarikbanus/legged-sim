@@ -75,7 +75,7 @@ class Quadruped {
   Vec3<T> _abadLocation, _abadRotorLocation, _hipLocation, _hipRotorLocation,
       _kneeLocation, _kneeRotorLocation;
   FloatingBaseModel<T> buildModel();
-  // FloatingBaseModel<T> _model;
+  FloatingBaseModel<T> _model;
   bool buildModel(FloatingBaseModel<T>& model);
   // std::vector<ActuatorModel<T>> buildActuatorModels();
 

@@ -16,7 +16,7 @@ template <typename T>
 void LinearKFPositionVelocityEstimator<T>::setup() {
   T dt = this->_stateEstimatorData.parameters->controller_dt;
   _xhat.setZero();
-  _xhat(2) = T(0.40);  // initial height guess
+  _xhat(2) = T(0.3);  // initial height guess
   _ps.setZero();
   _vs.setZero();
   _A.setZero();

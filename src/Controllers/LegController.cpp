@@ -210,12 +210,17 @@ template class LegController<float>;
  * leg coordinate system. If J/p are NULL, the calculation will be skipped.
  */
 template <typename T>
-void computeLegJacobianAndPosition(Quadruped<T>& quad, Vec3<T>& q, Mat3<T>* J,
-                                   Vec3<T>* p, int leg) {
+void computeLegJacobianAndPosition(Quadruped<T> &quad, Vec3<T> &q, Mat3<T> *J,
+                                  Vec3<T> *p, int leg)
+{
   T l1 = quad._abadLinkLength;
   T l2 = quad._hipLinkLength;
   T l3 = quad._kneeLinkLength;
   T l4 = quad._kneeLinkY_offset;
+  T l5 = quad._abadXOffset;
+  T l6 = quad._footRadius;
+  T s30 = sin(30*M_PI/180);
+  // T sideSign = 1;
   T sideSign = quad.getSideSign(leg);
 
   T s1 = std::sin(q(0));
@@ -228,26 +233,28 @@ void computeLegJacobianAndPosition(Quadruped<T>& quad, Vec3<T>& q, Mat3<T>* J,
 
   T c23 = c2 * c3 - s2 * s3;
   T s23 = s2 * c3 + c2 * s3;
-
-  if (J) {
+  int dir_sign[4] = {1, 1, -1, -1};
+  if (J)
+  {
     J->operator()(0, 0) = 0;
     J->operator()(0, 1) = l3 * c23 + l2 * c2;
     J->operator()(0, 2) = l3 * c23;
-    J->operator()(1, 0) = l3 * c1 * c23 + l2 * c1 * c2 - (l1+l4) * sideSign * s1;
+    J->operator()(1, 0) = l3 * c1 * c23 + l2 * c1 * c2 - (l1 + l4) * sideSign * s1;
     J->operator()(1, 1) = -l3 * s1 * s23 - l2 * s1 * s2;
     J->operator()(1, 2) = -l3 * s1 * s23;
-    J->operator()(2, 0) = l3 * s1 * c23 + l2 * c2 * s1 + (l1+l4) * sideSign * c1;
+    J->operator()(2, 0) = l3 * s1 * c23 + l2 * c2 * s1 + (l1 + l4) * sideSign * c1;
     J->operator()(2, 1) = l3 * c1 * s23 + l2 * c1 * s2;
     J->operator()(2, 2) = l3 * c1 * s23;
   }
 
-  if (p) {
-    p->operator()(0) = l3 * s23 + l2 * s2;
-    p->operator()(1) = (l1+l4) * sideSign * c1 + l3 * (s1 * c23) + l2 * c2 * s1;
-    p->operator()(2) = (l1+l4) * sideSign * s1 - l3 * (c1 * c23) - l2 * c1 * c2;
+  if (p)
+  {
+
+    p->operator()(0) = l3 * s23 + l2 * s2 + l5 * dir_sign[leg] ;
+    p->operator()(1) = (l1 + l4) * sideSign * c1 + l3 * (s1 * c23) + l2 * c2 * s1;
+    p->operator()(2) = (l1 + l4) * sideSign * s1 - l3 * (c1 * c23) - l2 * c1 * c2 ;
   }
 }
-
 template void computeLegJacobianAndPosition<double>(Quadruped<double>& quad,
                                                     Vec3<double>& q,
                                                     Mat3<double>* J,

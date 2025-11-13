@@ -51,7 +51,7 @@ FSM_State_Locomotion<T>::FSM_State_Locomotion(ControlFSMData<T>* _controlFSMData
   this->footstepLocations = Mat34<T>::Zero();
   _wbc_ctrl = new LocomotionCtrl<T>(_controlFSMData->_quadruped->buildModel());
   _wbc_data = new LocomotionCtrlData<T>();
-  _wbc_ctrl->setFloatingBaseWeight(10.);
+  _wbc_ctrl->setFloatingBaseWeight(250.);  // 50 for normal, 250 for safety
 }
 
 template <typename T>

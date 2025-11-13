@@ -19,6 +19,10 @@ using namespace spatial;
  */
 template <typename T>
 bool Quadruped<T>::buildModel(FloatingBaseModel<T>& model) {
+  // Reinitialize the floating-base model so repeated calls rebuild
+  // from a clean state (otherwise FloatingBaseModel throws when
+  // addBase is invoked twice).
+  model = FloatingBaseModel<T>();
   // we assume the cheetah's body (not including rotors) can be modeled as a
   // uniformly distributed box.
   Vec3<T> bodyDims(_bodyLength, _bodyWidth, _bodyHeight);
@@ -116,8 +120,8 @@ bool Quadruped<T>::buildModel(FloatingBaseModel<T>& model) {
  */
 template <typename T>
 FloatingBaseModel<T> Quadruped<T>::buildModel() {
-  FloatingBaseModel<T> model;
-  buildModel(model);
+  // FloatingBaseModel<T> model;
+  buildModel(_model); 
 /*
   // we assume the cheetah's body (not including rotors) can be modeled as a
   // uniformly distributed box.
@@ -203,7 +207,7 @@ FloatingBaseModel<T> Quadruped<T>::buildModel() {
   Vec3<T> g(0, 0, -9.81);
   model.setGravity(g);
 */
-  return model;
+  return _model;
 }
 
 /*!

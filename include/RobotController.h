@@ -37,6 +37,9 @@ public:
   virtual void Estop() {}
   ControlFSM<float>* _controlFSM;
 
+  FloatingBaseModel<float>* model() const { return _model; }
+  Quadruped<float>* quadruped() const { return _quadruped; }
+
 protected:
   Quadruped<float>* _quadruped = nullptr;
   FloatingBaseModel<float>* _model = nullptr;
