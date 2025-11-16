@@ -51,7 +51,7 @@ FSM_State_Locomotion<T>::FSM_State_Locomotion(ControlFSMData<T>* _controlFSMData
   this->footstepLocations = Mat34<T>::Zero();
   _wbc_ctrl = new LocomotionCtrl<T>(_controlFSMData->_quadruped->buildModel());
   _wbc_data = new LocomotionCtrlData<T>();
-  _wbc_ctrl->setFloatingBaseWeight(250.);  // 50 for normal, 250 for safety
+  _wbc_ctrl->setFloatingBaseWeight(50.);  // 50 for normal, 250 for safety
 }
 
 template <typename T>
@@ -298,10 +298,10 @@ void FSM_State_Locomotion<T>::LocomotionControlStep() {
       _wbc_data->pFoot_des[i] = this->_data->locomotionCtrlData.pFoot_des[i];
       _wbc_data->vFoot_des[i] = this->_data->locomotionCtrlData.vFoot_des[i];
       _wbc_data->aFoot_des[i] =   this->_data->locomotionCtrlData.aFoot_des[i];
-      _wbc_data->Fr_des[i] = this->_data->locomotionCtrlData.Fr_des[i] * this->_data->locomotionCtrlData.contact_state[i];
+      _wbc_data->Fr_des[i] = this->_data->locomotionCtrlData.Fr_des[i];
     }
     
-    // _wbc_data->contact_state = cMPCOld.contact_state;
+    _wbc_data->contact_state = this->_data->locomotionCtrlData.contact_state;
   if(this->_data->userParameters->use_wbc > 0.9 || 1 ){
     // _wbc_data->pBody_des = cMPCOld.pBody_des;
     // _wbc_data->vBody_des = cMPCOld.vBody_des;
