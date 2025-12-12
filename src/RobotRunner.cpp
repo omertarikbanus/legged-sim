@@ -41,7 +41,7 @@ void RobotRunner::init() {
     printf("ROBOT_RUNNER INIT");
 
     std::string mjcf_file;
-    mjcf_file = std::string("../resource/")+std::string("opy_v05/opy_v05.xml");
+    mjcf_file = std::string("../resource/")+std::string("demir_1/scene.xml");
     _Sim = new Simulation(mjcf_file); 
     _Sim->motor_input_type_=1;
     _Sim->SetCommand(_Command);
@@ -60,7 +60,7 @@ void RobotRunner::init() {
   #ifndef MANUAL
     _quadruped=ParseURDFtoQuadruped<float>(std::string("/app/legged-sim/resource/demir_1/demir_1.urdf"),RobotType::MINI_CHEETAH);
   #else 
-    _quadruped=ParseURDFtoQuadruped<float>(std::string("../resource/opy_v05/opy_v05.urdf"),RobotType::MINI_CHEETAH);
+    _quadruped=ParseURDFtoQuadruped<float>(std::string("../resource/demir_1/demir_1.urdf"),RobotType::MINI_CHEETAH);
   #endif
   // // Initialize the model and robot data
   _model = _quadruped.buildModel();
@@ -276,8 +276,8 @@ void RobotRunner::initializeParameters()
   	std::string robotParametersPath = "/app/legged-sim/resource/demir_1/demir-user-parameters.yaml";
     std::string userParametersPath = "/app/legged-sim/resource/demir_1/demir-robot-parameters.yaml";
     #else
-  	std::string robotParametersPath = "../redsource/opy_v05/mc-mit-ctrl-user-parameters.yaml";
-    std::string userParametersPath = "../resdource/opy_v05/mini-cheetah-defaults.yaml";
+  	std::string robotParametersPath = "../resource/demir_1/demir-user-parameters.yaml";
+    std::string userParametersPath = "../resource/demir_1/demir-robot-parameters.yaml";
     #endif
   	// userParameters.initializeFromYamlFile(path);
   	// printf("controlParameters: %d", controlParameters);

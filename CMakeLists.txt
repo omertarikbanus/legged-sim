@@ -4,25 +4,25 @@ cmake_minimum_required(VERSION 3.6)
 
 project(Legged-Software)
 
+# Find required packages
+find_package(glfw3 REQUIRED)
+find_package(GLEW REQUIRED)
+find_package(Curses REQUIRED)
+find_package(tinyxml2 REQUIRED)
+find_package(Threads REQUIRED)
+find_package(lcm REQUIRED)
+find_package(mujoco CONFIG REQUIRED)
+
+set(CMAKE_CXX_STANDARD 17)
+
 #MACOS specific
 if(APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__APPLE__")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__MACOSX__")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__MACOSX__")
-    find_package(glfw3 REQUIRED)
-    find_package(GLEW REQUIRED)
-    find_package(Curses REQUIRED)
-    find_package(tinyxml2 REQUIRED)
-    find_package(Threads REQUIRED)
-    find_package(lcm REQUIRED)
-    find_package(mujoco CONFIG REQUIRED)
     set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/usr/local")
 
     include_directories("/opt/homebrew/include")   # lcm includes
-    
-    set(CMAKE_CXX_STANDARD 17)
-
-
 
 # include_directories("./third-party/lcm/")   # lcm includes
 endif()
