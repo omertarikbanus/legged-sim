@@ -31,7 +31,6 @@
 #define MAX_STACK_SIZE 24576 // 16KB  of stack
 #define TASK_PRIORITY 99 // linux priority, this is not the nice value
 
-// #define MANUAL
 
 int main(int argc, char* argv[]){
   // google::SetStderrLogging(0);
@@ -106,7 +105,6 @@ int main(int argc, char* argv[]){
   _robotRunner->initializeParameters();
 
   // _robotRunner->init();
-  printf("initalized params\n");
   
   // // auto* param = _ctrl->getUserControlParameters();
 

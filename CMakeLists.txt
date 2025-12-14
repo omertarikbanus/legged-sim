@@ -14,6 +14,7 @@ find_package(lcm REQUIRED)
 find_package(mujoco CONFIG REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
+add_compile_definitions(MANUAL)
 
 #MACOS specific
 if(APPLE)
@@ -101,7 +102,6 @@ file(GLOB_RECURSE sources
 
 )
 
-add_compile_definitions(MANUAL)
 # add_subdirectory(user)
 
 SET (THIS_COM "../" )
@@ -113,4 +113,10 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake
 add_executable(legged_sim ${sources})
 
 target_link_libraries(legged_sim lcm  glfw qpOASES JCQP osqp GLEW::GLEW  ${CURSES_LIBRARIES} mujoco tinyxml2::tinyxml2 ${TinyXML_LIBRARIES})
+
+# Set rpath to include /usr/local/lib for MuJoCo library
+set_target_properties(legged_sim PROPERTIES
+    BUILD_RPATH "/usr/local/lib"
+    INSTALL_RPATH "/usr/local/lib"
+)
 

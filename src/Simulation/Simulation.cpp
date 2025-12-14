@@ -199,26 +199,42 @@ Simulation::Simulation(std::string filename)
     
     
     
-   std::cout <<"[SIM] "<< "Begin Simulation";
+   std::cout <<"[SIM] "<< "Begin Simulation" << std::endl;
     // load and compile model
     char error[100] = "Could not load binary model";
     mujoco::m = mj_loadXML(filename.c_str(), 0, error, 1000);
-
     if( !mujoco::m )
     {
         mju_error_s("Load model error: %s", error);
     }
-
+    std::cout <<"[SIM] "<< "Model Loaded" << std::endl;
     // make data
+    std::cout <<"[SIM] "<< "Making Data" << std::endl;
+    // print
     mujoco::d = mj_makeData(mujoco::m);
+    // check data
+std::cout << "MuJoCo version header: " << mjVERSION_HEADER
+          << " runtime: " << mj_version()
+          << " (" << mj_versionString() << ")\n";
 
+    std::cout <<"created mjData: " << mujoco::d << std::endl;
+    // print qpos
+    std::cout <<"qpos addr: " << mujoco::d->qpos << std::endl;
+    if( !mujoco::d )
+    {
+        mju_error("Could not allocate mjData");
+    }
+
+    std::cout <<"[SIM] "<< "Data Made" << std::endl;
     SetInitialConditions();
-    
+    std::cout<<"[SIM] "<< "Initial Conditions Set" << std::endl;
     mujoco::m->opt.timestep=DEFAULT_TIMESTEP;
+    std::cout <<"[SIM] "<< "Timestep Set to "<<DEFAULT_TIMESTEP<< std::endl;
     mj_step(mujoco::m, mujoco::d);
-    
-    mjcb_control = mujoco::control_callback;
+    std::cout<<"[SIM] "<< "First Step Done" << std::endl;
 
+    mjcb_control = mujoco::control_callback;
+    std::cout <<"[SIM] "<< "Data Created" << std::endl;
      // init GLFW
     glfwSetErrorCallback(&mujoco::glfwError);
     if( !glfwInit() )
@@ -563,9 +579,17 @@ void Simulation::SetFeedback(SpiData* _feedback_,VectorNavData* _bodyIMU ){
 void Simulation::SetInitialConditions()  //TODO: Do this from a YAML file?
 {
     for(int leg=0; leg<4; leg++){
+        std::cout<<"Setting Initial Conditions for leg "<<leg<<std::endl;
+        std::cout<< "idx"<<(leg)*3+  kAbad_  +7<<std::endl;
+        std::cout<< mujoco::d<<std::endl;
+        std::cout << mujoco::d->qpos<<std::endl;
         mujoco::d->qpos[(leg)*3+  kAbad_  +7]=1*(M_PI/180)*kSideSign_[leg];     // Add 7 to skip the first 7 dofs from body. (Position + Quaternion)
+        std::cout <<"Abad Init Pos: "<< mujoco::d->qpos[(leg)*3+  kAbad_  +7]<<std::endl;
         mujoco::d->qpos[(leg)*3+  kHip_   +7]=-90*(M_PI/180);//*kDirSign_[leg];
+        std::cout <<"Hip Init Pos: "<< mujoco::d->qpos[(leg)*3+  kHip_   +7]<<std::endl;
+
         mujoco::d->qpos[(leg)*3+  kKnee_  +7]=173*(M_PI/180);//*kDirSign_[leg];
+        std::cout <<"Knee Init Pos: "<< mujoco::d->qpos[(leg)*3+  kKnee_  +7]<<std::endl;
     }
 
 }

@@ -23,7 +23,7 @@ template <typename T>
 FSM_State_Locomotion<T>::FSM_State_Locomotion(ControlFSMData<T>* _controlFSMData)
     :  FSM_State<T>(_controlFSMData, FSM_StateName::LOCOMOTION, "LOCOMOTION")
     #ifdef CMPC_ENABLED
-        cMPCOld(_controlFSMData->controlParameters->controller_dt,
+        ,cMPCOld(_controlFSMData->controlParameters->controller_dt,
         // 30 / (1000. * _controlFSMData->controlParameters->controller_dt),
         // 22 / (1000. * _controlFSMData->controlParameters->controller_dt),
         27 / (1000. * _controlFSMData->controlParameters->controller_dt),
@@ -328,6 +328,7 @@ void FSM_State_Locomotion<T>::LocomotionControlStep() {
     #endif
     _wbc_ctrl->run(_wbc_data, *this->_data);
   }
+  /*
   #ifdef CMPC_ENABLED
   for(int leg(0); leg<4; ++leg){
     this->_data->_legController->commands[leg].pDes = pDes_backup[leg];
@@ -336,6 +337,7 @@ void FSM_State_Locomotion<T>::LocomotionControlStep() {
     this->_data->_legController->commands[leg].kdCartesian = Kd_backup[leg];
   }
   #endif
+   */
 
 }
 
